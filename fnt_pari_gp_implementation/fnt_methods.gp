@@ -110,6 +110,8 @@ out = fnt_revers(out1, fermat_number_base, alpha);
 print_vector_source_result("datain1 to fnt", datain1, out1);
 print_vector_source_result("datain2 to fnt", datain2, out2);
 
+print_vector_source_result("out1 - revers", out1, fnt_revers(out1, fermat_number_base, alpha));
+print_vector_source_result("out2 - revers", out2, fnt_revers(out2, fermat_number_base, alpha));
 print_vector_source_result("out1 - out2", out1 - out2, fnt_revers(out1 - out2, fermat_number_base, alpha));
 print_vector_source_result("out1 + out2", out1 + out2, fnt_revers(out1 + out2, fermat_number_base, alpha));
 print_vector_source_result("out1 * out2", multi_by_positions(out1, out2), fnt_revers(multi_by_positions(out1, out2), fermat_number_base, alpha));
