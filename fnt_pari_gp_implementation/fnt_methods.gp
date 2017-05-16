@@ -67,6 +67,28 @@ discrete_convolution(sequence1, sequence2) = {
 	return(dataout);
 }
 
+print_vector_source_result(title, a, b) = {
+	print(title, ":");
+	N = length(a);
+	for (i=1, N,
+		print(i, ":\t", a[i], "\t->\t", b[i], "\t")
+	);
+}
+
+multi_by_positions(a, b) = {
+	result = vector(N);
+	for (i=1, N, result[i] = out1[i] * out2[i];);
+	return(result);
+}
+
+
+divide_by_positions(a, b) = { 
+        result = vector(N);
+        for (i=1, N, result[i] = out1[i] / out2[i];);
+        return(result);
+}
+
+
 \\ Dane wejsciowe
 datain1 = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 datain2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
@@ -85,26 +107,20 @@ out2 = fnt(datain2, fermat_number_base, alpha);
 
 out = fnt_revers(out1, fermat_number_base, alpha);
 
-print("datain1:");
-for (i=1, N, print(i, ":\t", datain1[i], "\t->\t", out1[i], "\t"));
+print_vector_source_result("datain1 to fnt", datain1, out1);
+print_vector_source_result("datain2 to fnt", datain2, out2);
 
-print("datain2:");
-for (i=1, N, print(i, ":\t", datain2[i], "\t->\t", out2[i], "\t"));
-
-conv = vector(N);
-for (i=1, N, conv[i] = out1[i] * out2[i];);
-\\for (i=1, N, conv[i] = out1[i] - out2[i];);
-\\for (i=1, N, conv[i] = out1[i] + out2[i];);
-\\for (i=1, N, conv[i] = out1[i] * 3);
-\\for(i=1, N, conv[i] = out1[i] / 10); \\ Dziala dla wszystkich z wyjatkiem 3
-out = discrete_convolution(out1, out2); 
-out = fnt_revers(conv, fermat_number_base, alpha);
-
-for (i=1, N, print(i, ":\t", conv[i], "\t->\t", out[i], "\t"));
+print_vector_source_result("out1 - out2", out1 - out2, fnt_revers(out1 - out2, fermat_number_base, alpha));
+print_vector_source_result("out1 + out2", out1 + out2, fnt_revers(out1 + out2, fermat_number_base, alpha));
+print_vector_source_result("out1 * out2", multi_by_positions(out1, out2), fnt_revers(multi_by_positions(out1, out2), fermat_number_base, alpha));
+print_vector_source_result("out1 / out2", divide_by_positions(out1, out2), fnt_revers(divide_by_positions(out1, out2), fermat_number_base, alpha));
+print_vector_source_result("out1 * 3", out1 * 3, fnt_revers(out1 * 3, fermat_number_base, alpha));
+print_vector_source_result("out1 / 10", out1 / 10, fnt_revers(out1 / 10, fermat_number_base, alpha));
+print_vector_source_result("Conv result to fnt^(-1)", discrete_convolution(out1, out2), fnt_revers(discrete_convolution(out1, out2), fermat_number_base, alpha));
 
 x = vector(N);
 for(i=1, N, x[i] = i);
 
-plothraw(x, out, 1);
+\\plothraw(x, out, 1);
 quit();
 
