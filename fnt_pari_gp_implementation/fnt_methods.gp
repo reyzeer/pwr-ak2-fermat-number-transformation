@@ -45,7 +45,27 @@ fnt_revers(datain, fermat_number_base, alpha) = {
         return(dataout);
 }
 
+discrete_convolution(sequence1, sequence2) = {
 
+	N = length(sequence1);
+	dataout = vector(N);
+	
+	for (n = 1, N,
+
+		summ = 0;
+		for (m = 1, N,
+		
+			index = n - m;
+			if (index < 1, index = 1;);
+			summ = sequence1[index] * sequence2[m];
+		);
+	
+		dataout[n] = summ;
+
+	);
+	
+	return(dataout);
+}
 
 \\ Dane wejsciowe
 datain1 = [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -76,7 +96,8 @@ for (i=1, N, conv[i] = out1[i] * out2[i];);
 \\for (i=1, N, conv[i] = out1[i] - out2[i];);
 \\for (i=1, N, conv[i] = out1[i] + out2[i];);
 \\for (i=1, N, conv[i] = out1[i] * 3);
-\\for(i=1, N, conv[i] = out1[i] / 10); \\ Dziala dla wszystkich z wyjatkiem 3 
+\\for(i=1, N, conv[i] = out1[i] / 10); \\ Dziala dla wszystkich z wyjatkiem 3
+out = discrete_convolution(out1, out2); 
 out = fnt_revers(conv, fermat_number_base, alpha);
 
 for (i=1, N, print(i, ":\t", conv[i], "\t->\t", out[i], "\t"));
