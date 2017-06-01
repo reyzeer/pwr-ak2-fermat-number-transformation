@@ -36,9 +36,12 @@ for (count_element = 1, N,
 		kernel = alpha^(count_element*k);
 		summ += x_k * kernel;
 
-		\\print("x_k: ", x_k, " kernel: ", kernel, " summ: ", summ);		
-
+		\\ print("summ: ", summ, "\n");
+		 \\print("x: ", count_element, " k: ", k, " x_k: ", x_k, " kernel: ", kernel, " summ: ", summ);		
+	
 	);
+
+	\\quit();
 
 	result = summ % fermat_number;
 	dataout[count_element] = result;
@@ -56,12 +59,16 @@ for (count_element = 1, N,
                 kernel = alpha^(-count_element*k);
                 summ += x_k * kernel;
 
+		\\print("x: ", count_element, " k: ", k, " x_k: ", x_k, " kernel: ", kernel*1.0, " summ: ", summ);  
+
                 \\print("x_k: ", x_k, " kernel: ", kernel, " summ: ", summ);            
 
-        );  
+        );
+
+	\\ quit();  
 
         result = 1/N * summ % fermat_number;
-        redatain[count_element] = result;
+        redatain[count_element] = floor(result);
         \\ print(count_element, ": ", result);
 );
 }
