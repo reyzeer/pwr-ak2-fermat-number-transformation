@@ -7,19 +7,19 @@ fnt(datain, fermat_number_base, alpha) = {
 	fermat_number = 2^2^fermat_number_base + 1;
 	N = length(datain);
 	dataout = vector(N);
-	for (count_element = 1, N,
+	for (count_element = 0, N-1,
 
         	summ = 0;
-        	for (k=1, N,
+        	for (k=0, N-1,
 
-                	x_k = datain[k];
+                	x_k = datain[k+1];
                 	kernel = alpha^(count_element*k);
                 	summ += x_k * kernel;
 
         	);  
 
         	result = summ % fermat_number;
-        	dataout[count_element] = result;
+        	dataout[count_element+1] = result;
 );
 	return(dataout);
 }
@@ -28,19 +28,19 @@ fnt_revers(datain, fermat_number_base, alpha) = {
         fermat_number = 2^2^fermat_number_base + 1;
         N = length(datain);
         dataout = vector(N);
-        for (count_element = 1, N,
+        for (count_element = 0, N-1,
 
                 summ = 0;
-                for (k=1, N,
+                for (k=0, N-1,
 
-                        x_k = datain[k];
+                        x_k = datain[k+1];
                         kernel = alpha^(-count_element*k);
                         summ += x_k * kernel;
 
                 );
 
                 result = 1/N *summ % fermat_number;
-                dataout[count_element] = result;
+                dataout[count_element+1] = result;
 );
         return(dataout);
 }

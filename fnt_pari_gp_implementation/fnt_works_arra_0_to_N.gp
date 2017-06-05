@@ -27,12 +27,12 @@ dataout = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 redatain = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 {
-for (count_element = 1, N,
+for (count_element = 0, N-1,
 
-	summ = 0;
-	for (k=1, N,
+	summ = 0.0;
+	for (k=0, N-1,
 
-		x_k = datain[k];
+		x_k = datain[k+1];
 		kernel = alpha^(count_element*k);
 		summ += x_k * kernel;
 
@@ -43,18 +43,18 @@ for (count_element = 1, N,
 	\\ quit();
 
 	result = summ % fermat_number;
-	dataout[count_element] = result;
+	dataout[count_element+1] = result;
 	\\ print(count_element, ": ", result);
 );
 }
 
 {
-for (count_element = 1, N,
+for (count_element = 0, N-1,
 
-        summ = 0;
-        for (k=1, N,
+        summ = 0.0;
+        for (k=0, N-1,
 
-                x_k = dataout[k];
+                x_k = dataout[k+1];
                 kernel = alpha^(-count_element*k);
                 summ += x_k * kernel;
 
@@ -63,10 +63,11 @@ for (count_element = 1, N,
         );  
 
         result = 1/N * summ % fermat_number;
-        redatain[count_element] = result;
+        redatain[count_element+1] = result;
         \\ print(count_element, ": ", result);
 );
 }
+
 
 {
 for (i=1, N, print(i, ":\t", datain[i], "\t->\t", dataout[i], "\t->\t", redatain[i]));
