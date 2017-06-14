@@ -3,7 +3,14 @@
 import numpy as np
 from skimage import io
 from PIL import Image
-import sys
+import scipy.misc
+
+text_file = open("imgout_vetor.txt", "r")
+lines = text_file.read().split(';')
+print lines
+
+exit;
+
 
 # Load image
 img = io.imread('image.bmp')
@@ -24,6 +31,8 @@ imgAsVector = imgAsVector[:-1]
 imgAsVector += ']'
 
 print("%s" % (imgAsVector))
+
+scipy.misc.imsave('outfile.jpg', image_array)
 
 #print('[', end='')
 #for rows in img:

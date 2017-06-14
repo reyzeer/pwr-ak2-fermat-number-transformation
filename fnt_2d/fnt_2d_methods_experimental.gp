@@ -140,9 +140,9 @@ divide_by_positions(a, b) = {
 }
 
 alpha=2;
-fermat_number_base=4;
-width=32;
-height=32;
+fermat_number_base=2;
+width=16;
+height=16;
 
 N = width*height;
 fermat_number = fermat_number(fermat_number_base);
@@ -158,21 +158,39 @@ print("GCD [alpha^N - 1, q] = 1: ", gcd((alpha^N)-1, q));
 print("N: ", N);
 print("Fermat number: ", fermat_number);
 
+{
+	datain = [ 
+                10, 10, 10, 10; 
+                10, 10, 10, 10; 
+                0, 0, 0, 0;
+                0, 0, 0, 0
+        ];  
+}
+
+{
+	datain = [
+		10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10;
+		10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10;
+		10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10;
+		10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10;
+		10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10;
+		10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10;
+		10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10;
+		10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10;
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	];
+}
+
 datain = read("imgin_vector.txt");
 
 datainfnt = fnt2d(datain, width, height, fermat_number_base, alpha);
-
-mask = matrix(32,32);
-for(i=1,32, for(j=1,32, mask[i,j] = 1));
-
-datainfnt = datainfnt + 100*mask;
-\\ datainfnt = datainfnt / 10;
-
-mask = matrix(32,32);
-for(i=1,16, for(j=1,32, mask[i,j] = 1));
-
-\\ datainfnt = datainfnt * mask;
-
 dataout = fnt2d_revers(datainfnt, width, height, fermat_number_base, alpha);
 
 {
@@ -187,3 +205,42 @@ write("imginfnt_vector.txt", datainfnt);
 write("imgout_vector.txt", dataout);
 
 quit;
+
+\\ Dane wejsciowe
+datain1 = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+datain2 = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+\\ datain2 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
+
+alpha = 2;
+fermat_number_base = 2;
+
+N = length(datain);
+fermat_number = fermat_number(fermat_number_base);
+
+print("Alpha condition: alpha^N % fermat_numer == 1: ", (alpha^N) % fermat_number);
+print("Fermat_number condition: fermat_number > max(datain): ", fermat_number, " > ", vecmax(datain));
+
+out1 = fnt(datain1,fermat_number_base, alpha);
+out2 = fnt(datain2, fermat_number_base, alpha);
+
+out = fnt_revers(out1, fermat_number_base, alpha);
+
+print_vector_source_result("datain1 to fnt", datain1, out1);
+print_vector_source_result("datain2 to fnt", datain2, out2);
+
+print_vector_source_result("out1 - revers", out1, fnt_revers(out1, fermat_number_base, alpha));
+print_vector_source_result("out2 - revers", out2, fnt_revers(out2, fermat_number_base, alpha));
+print_vector_source_result("out1 - out2", out1 - out2, fnt_revers(out1 - out2, fermat_number_base, alpha));
+print_vector_source_result("out1 + out2", out1 + out2, fnt_revers(out1 + out2, fermat_number_base, alpha));
+print_vector_source_result("out1 * out2", multi_by_positions(out1, out2), fnt_revers(multi_by_positions(out1, out2), fermat_number_base, alpha));
+print_vector_source_result("out1 / out2", divide_by_positions(out1, out2), fnt_revers(divide_by_positions(out1, out2), fermat_number_base, alpha));
+print_vector_source_result("out1 * 3", out1 * 3, fnt_revers(out1 * 3, fermat_number_base, alpha));
+print_vector_source_result("out1 / 10", out1 / 10, fnt_revers(out1 / 10, fermat_number_base, alpha));
+print_vector_source_result("Conv result to fnt^(-1)", discrete_convolution(out1, out2), fnt_revers(discrete_convolution(out1, out2), fermat_number_base, alpha));
+
+x = vector(N);
+for(i=1, N, x[i] = i);
+
+\\plothraw(x, out, 1);
+quit();
+
